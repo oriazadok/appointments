@@ -1,23 +1,18 @@
-import React, { useState } from "react";
+import { useNavigate } from 'react-router-dom';
+import "../styles/Home.css"
 
 import Header from '../components/Header';
-import SignUp from '../components/SignUp';
-import SignIn from '../components/SignIn';
-
-
 
 const Home = () => {
 
-    const [sign, setSign]=useState("");
+  const navigate = useNavigate();
 
-    const signIn = () => {
-        console.log("s");
-        setSign("signIn")
-    }
-    const signUp = () => {
-        console.log("u");
-        setSign("signUp")
-    }
+  const signIn = () => {
+    navigate('SignIn/');
+  }
+  const signUp = () => {
+    navigate('SignUp/');
+  }
 
   return (
     <div>
@@ -25,15 +20,6 @@ const Home = () => {
         signIn={signIn}
         signUp={signUp}
        />
-
-        <div>
-        {
-            sign === "signUP" ? <SignUp /> : null
-        }
-        {
-            sign === "signIn" ? <SignIn /> : null
-        }
-        </div>
     </div>
   );
 }

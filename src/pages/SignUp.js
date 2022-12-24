@@ -1,16 +1,16 @@
 import React from 'react'
-import SignUp from '../components/SignUp'
+import Form from '../components/Form'
 
-// import { useHistory } from "react-router-dom";
+// import { useNavigate } from 'react-router-dom';
 
-const Login = () => {
+const SignUp = () => {
 
-    // let history = useHistory();
-
+    // const navigate = useNavigate();
+    // navigate('/home');
     
     return (
         <div>
-            <SignUp />
+            <Form />
             {/* <h1>This is Log in</h1>
             <button>
                 onClick = {() => {
@@ -19,10 +19,9 @@ const Login = () => {
             </button> */}
 
             
-        
             
         </div>
     )
 }
 
-export default Login
+export default SignUp
