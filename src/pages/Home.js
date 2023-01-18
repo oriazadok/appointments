@@ -20,6 +20,7 @@ const Home = () => {
         signIn={signIn}
         signUp={signUp}
        />
+       {/* <Button variant="contained">Contained</Button> */}
     </div>
   );
 }
