@@ -1,11 +1,14 @@
 import { useState } from "react"
+// import PropTypes from 'prop-types'
 
-const AvailableHours = ({ fullDate }) => {
+const AvailableHours = ({ fullDate, time }) => {
 
   const [value, setValue] = useState("9:00");
 
   const handleChange = (event) => {
     setValue(event.target.value);
+    time(value);
+    console.log("val", value);
   }
 
   let date = new Date(fullDate);
@@ -41,7 +44,6 @@ const AvailableHours = ({ fullDate }) => {
   const calcTime = (time) =>  {
     let hours = time.getHours();
     let minutes = time.getMinutes();
-    console.log("mm is: " + minutes);
     if(minutes === 0) {
       return `${hours}:00`
     }
@@ -52,9 +54,6 @@ const AvailableHours = ({ fullDate }) => {
   return (
     <div>
       <p>avaliable hours</p>
-      {/* <SublistHours sublist={first} />
-      <h3>second part</h3>
-      <SublistHours sublist={second} /> */}
 
       <select value={value} onChange={handleChange}>
       {hours.map((t) => <option key={index++} >{calcTime(t)}</option>)}
@@ -66,5 +65,16 @@ const AvailableHours = ({ fullDate }) => {
     </div>
   )
 }
+
+// AvailableHours.defaultProps = {
+//   fullDate: new Date(1, 2, 3),
+//   etc
+// }
+
+// AvailableHours.propTypes = {
+//   title: PropTypes.string.isRequired,
+// }
+
+
 
 export default AvailableHours

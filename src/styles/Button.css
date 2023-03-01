@@ -1,0 +1,41 @@
+
+button {
+    padding: 5px 10px;
+    margin: 10px;
+}
+
+button.logout {
+    background-color: red;
+    color: white;
+    font-size: 16px;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
+
+button.logout:hover {
+    background-color: #c62828;
+}
+
+.schedule-btn {
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 12px 30px;
+    text-align: center;
+    text-decoration: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 16px;
+    margin: 10px;
+    cursor: pointer;
+    border-radius: 5px;
+    box-shadow: 2px 2px 2px #888888;
+}
+
+
+
+
+

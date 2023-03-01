@@ -3,11 +3,11 @@ import "../styles/Home.css"
 
 import Header from '../components/Header';
 
-const Home = () => {
+const Home = ({ setauth }) => {
 
   const navigate = useNavigate();
 
-  const signIn = () => {
+  const signIn = ( formdata ) => {
     navigate('SignIn/');
   }
   const signUp = () => {
@@ -16,11 +16,11 @@ const Home = () => {
 
   return (
     <div>
-      <Header 
+      <Header
+        setauth={setauth} 
         signIn={signIn}
         signUp={signUp}
        />
-       {/* <Button variant="contained">Contained</Button> */}
     </div>
   );
 }

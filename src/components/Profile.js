@@ -1,36 +1,74 @@
 import React, { useState } from 'react'
 import Calendar from 'react-calendar';
 
+import Button from "./Button"
+import Myappointment from './Myappointment';
+import HaircutMenu from './HaircutMenu';
+// import AvailableHours from './AvailableHours';
+import NewAvailableHours from './NewAvailableHours';
+
+import {  useNavigate } from 'react-router-dom';
+// import { Redirect } from "react-router-dom"
+
+import '../styles/Button.css'
+import '../styles/Profile.css'
 import 'react-calendar/dist/Calendar.css'
 import '../styles/Cal.css'
 
-import Button from "./Button"
-import HaircutMenu from './HaircutMenu';
-import AvailableHours from './AvailableHours';
-// import { Redirect } from "react-router-dom"
 
-const Profile = ({ authorized }) => {
+const Profile = ({ setauth, authorized, uname, dataMenu }) => {
 
-  // if(! authorized) {
-  //     // return <Redirect  to="/login" />
+  const navigate = useNavigate();
+
+  // if( !authorized ) {
+  //   navigate("/");
   // }
-
 
   const [showHaircutMenu, setShowHaircutMenu]=useState(false);
   const [selected, setSelected]=useState("");
   const [date, setDate]=useState(new Date());
+  const [hour, setHour] = useState("9:00");
 
-  const schdule = () => { setShowHaircutMenu(true); }
+
+  const schedule = () => { setShowHaircutMenu(true); }
   const select = (s) => { setSelected(s); }
   const onChange = (date) => { setDate(date); }
+  const setTime = (h) => { setHour(h); }
 
-  const send = () => {
-    console.log("sending")
+  const logout = () => {
+    setauth(false, "");
+    navigate("/");
   }
+
+  const send = async (event) => {
+    let schedule = {
+      style: selected,
+      date: date,
+      hour: hour, 
+    }
+    event.preventDefault();
+    try {
+        const response = await fetch('/api/schedule', {
+            method: 'POST',
+            body: JSON.stringify(schedule),
+            headers: { 'Content-Type': 'application/json' },
+        });
+        const ans = await response.json();
+        console.log(typeof(ans));
+
+    } catch (error) {
+        console.error(error);
+    }
+};
 
   return (
     <div>
-      <h1>Hello User</h1>
+      <Button class_name="logout"
+        text={"Log out"}
+        btn_f = {logout} 
+      />
+      <h1>Hello {uname}</h1>
+      <Myappointment />
       {/**
        * here should be data about scheduled Appointments etc
        * general message etc
@@ -38,15 +76,15 @@ const Profile = ({ authorized }) => {
 
       {
         showHaircutMenu === false ?
-          <Button 
+          <Button class_name="schedule-btn"
             text = "Schedule Now"
-            btn_f={schdule}
+            btn_f={schedule}
           /> 
           : null
       }
 
       { /* haircut menu */ }
-      { showHaircutMenu === true ? <HaircutMenu selected={select} /> : null }
+      { showHaircutMenu === true ? <HaircutMenu dataMenu={dataMenu} selected={select} /> : null }
       
       {
         selected !== "" ? <p>Selected: {selected}</p> : null
@@ -57,7 +95,7 @@ const Profile = ({ authorized }) => {
         selected !== "" ? 
         // <Datepicker controls={['calendar']} touchUi={true} inputComponent="input" inputProps={props} />
         //   <input type="date" onChange={e=>setDate(e.target.value)} />
-          <Calendar onChange={onChange} value={date} />
+          <div className="cal-container"><Calendar onChange={onChange} value={date} /></div>
         : null
       }
       
@@ -71,18 +109,22 @@ const Profile = ({ authorized }) => {
 
       {
         selected !== "" ? 
-          <AvailableHours fullDate={date}/>
+          <NewAvailableHours fullDate={date} ftime={setTime}/>
           : null
       }
+
+      {/* {
+        selected !== "" ? 
+          <AvailableHours fullDate={date} time={setTime}/>
+          : null
+      } */}
 
       {
         selected !== "" ? 
           <Button text="save" btn_f={send}/>
           : null
       }
-      
-      
-      
+
       <br />
       <br />
       <br />

@@ -1,7 +1,46 @@
-// import React from 'react'
+import { useState } from 'react'
+import { useNavigate } from 'react-router-dom';
 import "../styles/Form.css"
 
-const Form = () => {
+const Form = ({ setauth }) => {
+
+    const navigate = useNavigate();
+
+    const [formData, setFormData] = useState({});
+
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+        try {
+            const response = await fetch('/api/submit', {
+                method: 'POST',
+                body: JSON.stringify(formData),
+                headers: { 'Content-Type': 'application/json' },
+            });
+            const ans = await response.json();
+            console.log(ans);
+
+            if(!ans){
+                window.alert("Registered succesfully!");
+                setauth(true, formData.uname);
+                navigate('/SignIn/');
+                // navigate('/');
+            } else {
+                window.alert("You already have an acount!");
+                navigate('/');
+            }
+            
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
+    const handleChange = (event) => {
+        setFormData({
+            ...formData,
+            [event.target.name]: event.target.value,
+        });
+        console.log("fdfd", formData);
+    };
     
     let days = [];
     for( let i = 0; i <31; i++ ) { days[i] = i + 1 }
@@ -11,50 +50,52 @@ const Form = () => {
 
     const y = new Date().getFullYear();
     let years = [];
-    for( let i = 1940; i <=y; i++ ) { years[i] = i }
+    let index = 0;
+    for( let i = y; i >= 1940; i-- ) { years[index++] = i }
 
     return (
         <div>
             <h1 className="head">Sign Up</h1>
             <div className="form">
-                <form action="" method="get">
-                    <label for="fname">First name:</label><br/>
-                    <input type="text" id="fname" name="fname" /><br/>
+                {/* <form action="" method="get"> */}
+                <form onSubmit={handleSubmit}>
+                    <label>First name:</label><br/>
+                    <input type="text" id="fname" name="fname" required onChange={handleChange}/><br/>
 
-                    <label for="lname">Last name:</label><br/>
-                    <input type="text" id="lname" name="lname" /><br/>
+                    <label>Last name:</label><br/>
+                    <input type="text" id="lname" name="lname" required onChange={handleChange}/><br/>
             
-                    <label for="uname">User name:</label><br/>
-                    <input type="text" id="uname" name="uname" /><br/>
+                    <label>User name:</label><br/>
+                    <input type="text" id="uname" name="uname" required onChange={handleChange}/><br/>
                 
-                    <label for="pwd">Password:</label><br/>
-                    <input type="password" id="pwd" name="pwd" /><br/><br/>
-                    <label for="email">Email:</label><br/>
-                    <input type="email" id="email" name="email" /><br/><br/>
+                    <label>Email:</label><br/>
+                    <input type="email" id="email" name="email" required onChange={handleChange}/><br/><br/>
+                    <label>Password:</label><br/>
+                    <input type="password" id="pwd" name="pwd" required onChange={handleChange}/><br/><br/>
             
-                    <input type="radio" id="male" name="gender" value="MALE" />
-                    <label for="male">male</label><br/>
-                    <input type="radio" id="female" name="gender" value="FEMALE" />
-                    <label for="female">female</label><br/><br/>
+                    <input type="radio" id="male" name="gender" required value="MALE" onChange={handleChange}/>
+                    <label> male</label><br/>
+                    <input type="radio" id="female" name="gender" required value="FEMALE" onChange={handleChange}/>
+                    <label> female</label><br/><br/>
 
                     {/* type="number" */}
-                    <label for="day">Day: </label>
-                    <input list="days" size="12"/>
+                    <label> Day: </label>
+                    <input name="day" list="days" size="12" required onChange={handleChange}/>
                     <datalist id="days">
-                        {days.map((op) => <option>{op}</option>)} 
+                        {days.map((op, index) => <option key={index}>{op}</option>)} 
                     </datalist>
 
                     
-                    <label for="month"> Month: </label>
-                    <input list="months" size="12" />
+                    <label> Month: </label>
+                    <input name="month" list="months" size="12" required onChange={handleChange}/>
                     <datalist id="months">
-                        {months.map((op) => <option>{op}</option>)} 
+                        {months.map((op, index) => <option key={index}>{op}</option>)} 
                     </datalist>
 
-                    <label for="year"> Year: </label>
-                    <input list="years" size="12" />
+                    <label> Year: </label>
+                    <input name="year" list="years" size="12" required onChange={handleChange}/>
                     <datalist id="years">
-                        {years.map((op) => <option>{op}</option>)} 
+                        {years.map((op, index) => <option key={index}>{op}</option>)} 
                     </datalist><br/><br/>
 
                     <input type="submit" value="Sign Up" />

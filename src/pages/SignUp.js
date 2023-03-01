@@ -3,14 +3,14 @@ import Form from '../components/Form'
 
 // import { useNavigate } from 'react-router-dom';
 
-const SignUp = () => {
+const SignUp = ({ setauth }) => {
 
     // const navigate = useNavigate();
     // navigate('/home');
     
     return (
         <div>
-            <Form />
+            <Form setauth={setauth}/>
             {/* <h1>This is Log in</h1>
             <button>
                 onClick = {() => {

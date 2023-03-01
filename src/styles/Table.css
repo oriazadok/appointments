@@ -1,0 +1,30 @@
+
+
+table, th, td {
+    width: 25%;
+    margin: 15px;
+    padding: 10px;
+    border: 2px solid black;
+    text-align: center;
+}
+
+
+
+table {
+    margin: auto;
+    background-color: brown;
+}
+
+
+th {
+    background-color: blueviolet;
+}
+
+td {
+    background-color: burlywood;
+}
+
+tr:hover {
+    background-color: black;
+}
+

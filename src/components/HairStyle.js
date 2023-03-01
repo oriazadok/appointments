@@ -1,5 +1,6 @@
 import React from 'react'
 import Button from './Button'
+import "../styles/HCMenu.css"
 
 const HairStyle = ({ hairStyle, price, select}) => {
 
@@ -8,10 +9,12 @@ const HairStyle = ({ hairStyle, price, select}) => {
   }
 
   return (
-    <div>
+    <div className="hair-style">
       <p>{hairStyle} {price}$ <Button text={"select"}  btn_f={setHairStyle} /> </p>
     </div>
   )
 }
 
 export default HairStyle
+
+
