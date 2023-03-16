@@ -1,0 +1,48 @@
+/* 
+.hours {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    border: 1px solid black;
+    max-width: 500px;
+    margin: 0 auto;
+}
+ */
+
+ .hours {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+  }
+  
+  .hour-button {
+    margin-top: 10px;
+  }
+  
+  .hour-button button {
+    margin-right: 5px;
+    margin-bottom: 5px;
+    background-color: #f2f2f2;
+    color: #333;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px 15px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  
+  .hour-button button:hover {
+    background-color: #ccc;
+  }
+  
+  .selected {
+    background-color: #0066cc;
+    color: #fff;
+  }
+  
+  .selected:hover {
+    background-color: #004080;
+  }
+  

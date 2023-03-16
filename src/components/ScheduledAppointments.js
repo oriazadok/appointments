@@ -1,7 +1,7 @@
 import React from 'react'
 import "../styles/Table.css"
 
-const Myappointment = ({ appointmentslist }) => {
+const ScheduledAppointments = ({ appointmentslist }) => {
 
     const list = {
         "27/02/2023": "10:30",
@@ -19,7 +19,6 @@ const Myappointment = ({ appointmentslist }) => {
 
   return (
     <div>
-        <h1>my appoonitments</h1>
         <table>
             <thead>
                 <tr>
@@ -35,4 +34,4 @@ const Myappointment = ({ appointmentslist }) => {
   )
 }
 
-export default Myappointment
+export default ScheduledAppointments

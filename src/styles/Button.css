@@ -1,4 +1,8 @@
 
+body {
+    text-align: center;
+}
+
 button {
     padding: 5px 10px;
     margin: 10px;
@@ -7,6 +11,7 @@ button {
 button.logout {
     background-color: red;
     color: white;
+    float: left;
     font-size: 16px;
     padding: 10px 20px;
     border-radius: 5px;
@@ -25,17 +30,38 @@ button.logout:hover {
     padding: 12px 30px;
     text-align: center;
     text-decoration: none;
-    display: flex;
+    /* display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: center; */
     font-size: 16px;
-    margin: 10px;
+    margin: 30px;
     cursor: pointer;
     border-radius: 5px;
     box-shadow: 2px 2px 2px #888888;
+    transition: all 0.5s;
 }
 
+.schedule-btn:hover {
+    transform: scale(1.1);
+}
 
+.select-button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+}
+  
+.select-button:hover {
+    background-color: #0069d9;
+}
+
+.hour-button {
+    /* width: 70px; */
+}
 
 
 

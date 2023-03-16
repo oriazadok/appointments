@@ -10,7 +10,7 @@ const HairStyle = ({ hairStyle, price, select}) => {
 
   return (
     <div className="hair-style">
-      <p>{hairStyle} {price}$ <Button text={"select"}  btn_f={setHairStyle} /> </p>
+      <p>{hairStyle}</p> <p>{price}$</p> <Button text={"select"}  btn_f={setHairStyle} class_name={"select-button"}/> 
     </div>
   )
 }

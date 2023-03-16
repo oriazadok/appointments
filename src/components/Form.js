@@ -1,45 +1,87 @@
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 import "../styles/Form.css"
+
+import { auth, googleProvider } from "../config/firebase-config";
+import { createUserWithEmailAndPassword, signInWithPopup, signOut } from "firebase/auth";
+
+// import { async } from '@firebase/util';
 
 const Form = ({ setauth }) => {
 
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
 
     const [formData, setFormData] = useState({});
 
-    const handleSubmit = async (event) => {
-        event.preventDefault();
-        try {
-            const response = await fetch('/api/submit', {
-                method: 'POST',
-                body: JSON.stringify(formData),
-                headers: { 'Content-Type': 'application/json' },
-            });
-            const ans = await response.json();
-            console.log(ans);
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
 
-            if(!ans){
-                window.alert("Registered succesfully!");
-                setauth(true, formData.uname);
-                navigate('/SignIn/');
-                // navigate('/');
-            } else {
-                window.alert("You already have an acount!");
-                navigate('/');
-            }
-            
-        } catch (error) {
-            console.error(error);
+    console.log(auth?.currentUser?.email);
+
+    const signIn = async () => {
+        try {
+            await createUserWithEmailAndPassword(auth, email, password);
+        } catch (err) {
+            console.error(err);
         }
     };
 
+    const signInWithGoogle = async() => {
+        try {
+            await signInWithPopup(auth, googleProvider);
+        } catch(err) {
+            console.error(err);
+        }
+    };
+
+    const logout = async() => {
+        try {
+            await signOut(auth);
+        } catch (err) {
+            console.error(err);
+        }
+    }
+
+    const show = () => {
+        setFormData({na: "ccwe"});
+        console.log(formData);
+    };
+
+
+
+    // const handleSubmit = async (event) => {
+    //     event.preventDefault();
+    //     try {
+    //         const response = await fetch('/api/submit', {
+    //             method: 'POST',
+    //             body: JSON.stringify(formData),
+    //             headers: { 'Content-Type': 'application/json' },
+    //         });
+    //         const ans = await response.json();
+    //         console.log(ans);
+
+    //         if(!ans){
+    //             window.alert("Registered succesfully!");
+    //             setauth(true, formData.uname);
+    //             navigate('/SignIn/');
+    //             // navigate('/');
+    //         } else {
+    //             window.alert("You already have an acount!");
+    //             navigate('/');
+    //         }
+            
+    //     } catch (error) {
+    //         console.error(error);
+    //     }
+    // };
+
     const handleChange = (event) => {
+        // if(event.target.value === "email") {}
         setFormData({
             ...formData,
             [event.target.name]: event.target.value,
         });
-        console.log("fdfd", formData);
+        // console.log("fdfd", formData);
     };
     
     let days = [];
@@ -58,7 +100,7 @@ const Form = ({ setauth }) => {
             <h1 className="head">Sign Up</h1>
             <div className="form">
                 {/* <form action="" method="get"> */}
-                <form onSubmit={handleSubmit}>
+                <form>
                     <label>First name:</label><br/>
                     <input type="text" id="fname" name="fname" required onChange={handleChange}/><br/>
 
@@ -69,9 +111,9 @@ const Form = ({ setauth }) => {
                     <input type="text" id="uname" name="uname" required onChange={handleChange}/><br/>
                 
                     <label>Email:</label><br/>
-                    <input type="email" id="email" name="email" required onChange={handleChange}/><br/><br/>
+                    <input type="email" id="email" name="email" required onChange={(e) => setEmail(e.target.value)}/><br/><br/>
                     <label>Password:</label><br/>
-                    <input type="password" id="pwd" name="pwd" required onChange={handleChange}/><br/><br/>
+                    <input type="password" id="password" name="password" required onChange={(e) => setPassword(e.target.value)}/><br/><br/>
             
                     <input type="radio" id="male" name="gender" required value="MALE" onChange={handleChange}/>
                     <label> male</label><br/>
@@ -98,8 +140,12 @@ const Form = ({ setauth }) => {
                         {years.map((op, index) => <option key={index}>{op}</option>)} 
                     </datalist><br/><br/>
 
-                    <input type="submit" value="Sign Up" />
+                    {/* <input type="submit" value="Sign Up" /> */}
+                    <button onClick={signIn}>create</button>
                 </form>
+                <button onClick={show}>show</button>
+                <button onClick={signInWithGoogle}>sign in with google</button>
+                <button onClick={logout}>Log Out</button>
             </div>
         </div>
     )

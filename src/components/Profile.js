@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import Calendar from 'react-calendar';
 
 import Button from "./Button"
-import Myappointment from './Myappointment';
+import ScheduledAppointments from './ScheduledAppointments';
 import HaircutMenu from './HaircutMenu';
 // import AvailableHours from './AvailableHours';
 import NewAvailableHours from './NewAvailableHours';
@@ -15,7 +15,13 @@ import '../styles/Profile.css'
 import 'react-calendar/dist/Calendar.css'
 import '../styles/Cal.css'
 
-
+/**
+ * toDo:
+ * 1. connect to fire base
+ * 2. find nice logo for the website - v
+ * 3. create navigationbar bar
+ * 4. work on the available hours
+ */
 const Profile = ({ setauth, authorized, uname, dataMenu }) => {
 
   const navigate = useNavigate();
@@ -32,8 +38,8 @@ const Profile = ({ setauth, authorized, uname, dataMenu }) => {
 
   const schedule = () => { setShowHaircutMenu(true); }
   const select = (s) => { setSelected(s); }
-  const onChange = (date) => { setDate(date); }
-  const setTime = (h) => { setHour(h); }
+  const onChange = (chosen_date) => { setDate(chosen_date); }
+  const setTime = (h) => { setHour(h); console.log("cudate", date) }
 
   const logout = () => {
     setauth(false, "");
@@ -41,11 +47,12 @@ const Profile = ({ setauth, authorized, uname, dataMenu }) => {
   }
 
   const send = async (event) => {
-    let schedule = {
+    const schedule = {
       style: selected,
       date: date,
       hour: hour, 
     }
+    console.log("zzzzzz", schedule)
     event.preventDefault();
     try {
         const response = await fetch('/api/schedule', {
@@ -54,25 +61,31 @@ const Profile = ({ setauth, authorized, uname, dataMenu }) => {
             headers: { 'Content-Type': 'application/json' },
         });
         const ans = await response.json();
-        console.log(typeof(ans));
+        console.log("anss", ans);
 
     } catch (error) {
         console.error(error);
     }
-};
+  };
+
+  const clear = {
+    clear: "left"
+  };
+  
+  const h2 = {
+    margin: "10px"
+  };
 
   return (
     <div>
       <Button class_name="logout"
-        text={"Log out"}
+        text={"Log Out"}
         btn_f = {logout} 
       />
-      <h1>Hello {uname}</h1>
-      <Myappointment />
-      {/**
-       * here should be data about scheduled Appointments etc
-       * general message etc
-       */}
+
+      <h1 style={clear}>Hello {uname}</h1>
+      <h2 style={h2}>my appoonitments</h2>
+      <ScheduledAppointments /> {/* table of scheduled appointments */}
 
       {
         showHaircutMenu === false ?
@@ -95,7 +108,7 @@ const Profile = ({ setauth, authorized, uname, dataMenu }) => {
         selected !== "" ? 
         // <Datepicker controls={['calendar']} touchUi={true} inputComponent="input" inputProps={props} />
         //   <input type="date" onChange={e=>setDate(e.target.value)} />
-          <div className="cal-container"><Calendar onChange={onChange} value={date} /></div>
+          <div className="cal-container"><Calendar onChange={onChange} value={date} d/></div>
         : null
       }
       

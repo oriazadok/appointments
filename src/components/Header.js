@@ -20,6 +20,7 @@ const Header = ({ setauth, signIn, signUp }) => {
             headers: { 'Content-Type': 'application/json' },
         });
         const uname = await response.json();
+        console.log("uname", uname);
 
         if(uname) {
           setauth(true, uname);
@@ -53,7 +54,7 @@ const Header = ({ setauth, signIn, signUp }) => {
             <input type="email" id="email" name="email" required onChange={handleChange}/><br/><br/>
             
             <label>Password:</label><br/>
-            <input type="password" id="pwd" name="pwd" required onChange={handleChange}/><br/><br/>
+            <input type="password" id="password" name="password" required onChange={handleChange}/><br/><br/>
 
             <input type="submit" value="Sign In" />
       

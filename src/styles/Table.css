@@ -12,6 +12,7 @@ table, th, td {
 
 table {
     margin: auto;
+    margin-bottom: 20px;
     background-color: brown;
 }
 

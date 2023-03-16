@@ -1,11 +1,16 @@
 import React, { useEffect, useState } from 'react'; 
 
+// import { auth, db } from "./config/firebase-config"
+// import { collection, getDocs, addDoc, deleteDoc, updateDoc, doc } from 'firebase/firestore';
+
 import './App.css';
 
+import Navbar from './components/Navbar';
 import { BrowserRouter as  Router, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import SignUp from './pages/SignUp';
 import SignIn from './pages/SignIn';
+// import { async } from '@firebase/util';
 
 
 function App() {
@@ -13,6 +18,57 @@ function App() {
   const[authorized, setauthorized] = useState(false);
   const[userName, setUserName] = useState("");
   const[dataMenu, setDataMenu] = useState([]);
+
+  // const[clientList, setClientList] = useState([]);
+
+  // const clientsCollectionRef = collection(db, "clients");
+
+  // useEffect(() => {
+  //   const getClientList = async () => {
+  //     // READ THE DATA
+  //     // SET THE CLIENT LIST
+  //     try {
+  //       const data = await getDocs(clientsCollectionRef);
+  //       const filteredData = data.docs.map((doc) => ({
+  //         ...doc.data(),
+  //         id: doc.id,
+  //       }))
+  //       console.log(filteredData);
+  //     } catch(err) {
+  //       console.error(err);
+  //     }
+  //   };
+
+  //   getClientList();
+  // }, []);
+
+  // useEffect(() => {
+  //   const addClient = async () => {
+  //     try {
+  //       await addDoc(clientsCollectionRef, {
+  //         uid: auth?.currentUser.uid,
+  //         fname: "or",
+  //         lname: "re",
+  //         uname: "oro"
+  //       });
+  //     } catch(err) {
+  //       console.error(err);
+  //     }
+  //   }
+  //   addClient();
+  // }, [])
+
+  // const deleteClient = async (id) => {
+  //   const clientDoc = doc(db, "clients", id);
+  //   await deleteDoc(clientDoc);
+  // }
+
+  // const updateClient = async (id) => {
+  //   const clientDoc = doc(db, "clients", id);
+  //   await updateDoc(clientDoc, { uname: "newuname" });
+  // }
+
+  
 
   const setauthorization = (state, username) => {
     // console.log("state", state);
@@ -34,6 +90,7 @@ function App() {
     <div>
     
       <Router>
+        <Navbar />
         <Routes>
           <Route path="/" element={<Home setauth={setauthorization}/>} />
           <Route path="/signup" element={<SignUp setauth={setauthorization}/>} />
@@ -49,3 +106,5 @@ function App() {
 }
 
 export default App;
+
+

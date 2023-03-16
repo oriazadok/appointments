@@ -1,28 +1,31 @@
 import React from 'react'
 import '../styles/Button.css'
 
-const Button = ({ text , btn_f, class_name}) => {
-    return (
-        <button
-        // {style=color="red" }
-            onClick={btn_f} 
-            className={`btn ${class_name}`}>
-                {text}
-        </button>
-    )
+const Button = ({ text , btn_f, val, class_name}) => {
+
+    const func = () => {
+        btn_f(val)
+    }
+
+    if(val) {
+        return (
+            <button
+            // {style=color="red" }
+                onClick={func} 
+                className={`btn ${class_name}`}>
+                    {text}
+            </button>
+        )
+    } else {
+        return (
+            <button
+            // {style=color="red" }
+                onClick={btn_f} 
+                className={`btn ${class_name}`}>
+                    {text}
+            </button>
+        )
+    }
 }
-
-// function MyComponent(props) {
-//     if (props.myProp) {
-//       // do something with the prop
-//     } else {
-//       console.log('myProp is not defined');
-//     }
-    
-//     return (
-//       // your component's JSX here
-//     );
-//   }
-
 
 export default Button

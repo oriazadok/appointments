@@ -17,6 +17,10 @@ h1 {
     margin-bottom: 30px;
 }
 
+/* label {
+    background-color: blue;
+} */
+
 input[type=text], input[type=password], input[type=email], input[type=submit] {
     width: 100%;
     padding: 12px 20px;
