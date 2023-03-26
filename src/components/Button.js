@@ -10,7 +10,6 @@ const Button = ({ text , btn_f, val, class_name}) => {
     if(val) {
         return (
             <button
-            // {style=color="red" }
                 onClick={func} 
                 className={`btn ${class_name}`}>
                     {text}
@@ -19,7 +18,6 @@ const Button = ({ text , btn_f, val, class_name}) => {
     } else {
         return (
             <button
-            // {style=color="red" }
                 onClick={btn_f} 
                 className={`btn ${class_name}`}>
                     {text}

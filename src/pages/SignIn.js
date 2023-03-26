@@ -45,7 +45,7 @@ const SignIn = ({ setauth, authorized, uname, dataMenu }) => {
   //   navigate('profile/');
   // }
   const signUp = () => {
-    navigate('SignUp/');
+    navigate('/signup');
   }
 
   return (
@@ -81,23 +81,6 @@ const SignIn = ({ setauth, authorized, uname, dataMenu }) => {
       </div>
 
     </header>
-    
-    // <div>
-    //   {/* <h1>Hello {user}</h1> */}
-
-    //   {
-    //     !authorized ? 
-    //     <LogIn
-    //       setauth={setauth} 
-    //       signIn={signIn}
-    //       signUp={signUp}
-    //    />
-    //     : 
-    //     null
-    //     // <Profile setauth={setauth} authorized={authorized} uname={uname} dataMenu={dataMenu}/>
-    //   }
-
-    // </div>
   )
 }
 

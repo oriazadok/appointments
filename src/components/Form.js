@@ -3,9 +3,8 @@ import { useState } from 'react'
 import "../styles/Form.css"
 
 import { auth, googleProvider } from "../config/firebase-config";
-import { createUserWithEmailAndPassword, signInWithPopup, signOut } from "firebase/auth";
+import { signInWithPopup, signOut } from "firebase/auth";
 
-// import { async } from '@firebase/util';
 
 const Form = ({ setauth }) => {
 
@@ -13,16 +12,21 @@ const Form = ({ setauth }) => {
 
     const [formData, setFormData] = useState({});
 
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-
-    console.log(auth?.currentUser?.email);
+    // console.log(auth?.currentUser?.email);
 
     const signIn = async () => {
+        
         try {
-            await createUserWithEmailAndPassword(auth, email, password);
-        } catch (err) {
-            console.error(err);
+            const response = await fetch('/api/submit', {
+                method: 'POST',
+                body: JSON.stringify(formData),
+                headers: { 'Content-Type': 'application/json' },
+            });
+            const ans = await response.json();
+            console.log("anss", ans);
+    
+        } catch (error) {
+            console.error(error);
         }
     };
 
@@ -76,12 +80,11 @@ const Form = ({ setauth }) => {
     // };
 
     const handleChange = (event) => {
-        // if(event.target.value === "email") {}
         setFormData({
             ...formData,
             [event.target.name]: event.target.value,
         });
-        // console.log("fdfd", formData);
+        console.log("fdfd", formData);
     };
     
     let days = [];
@@ -111,9 +114,9 @@ const Form = ({ setauth }) => {
                     <input type="text" id="uname" name="uname" required onChange={handleChange}/><br/>
                 
                     <label>Email:</label><br/>
-                    <input type="email" id="email" name="email" required onChange={(e) => setEmail(e.target.value)}/><br/><br/>
+                    <input type="email" id="email" name="email" required onChange={handleChange}/><br/><br/>
                     <label>Password:</label><br/>
-                    <input type="password" id="password" name="password" required onChange={(e) => setPassword(e.target.value)}/><br/><br/>
+                    <input type="password" id="password" name="password" required onChange={handleChange}/><br/><br/>
             
                     <input type="radio" id="male" name="gender" required value="MALE" onChange={handleChange}/>
                     <label> male</label><br/>

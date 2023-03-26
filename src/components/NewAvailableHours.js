@@ -1,10 +1,8 @@
-import { useState } from "react"
 import Button from "./Button";
 
 import "../styles/AvailableHours.css"
 
 const NewAvailableHours = ({ fullDate, ftime }) => {
-    const [time, setTime] = useState("9:00");
 
     const cdate = (fulldate) => {
         let date = new Date(fulldate);
@@ -15,9 +13,7 @@ const NewAvailableHours = ({ fullDate, ftime }) => {
     }
 
     const handleChange = (val) => {
-      setTime(val);
-      ftime(time);
-      console.log("tttval", time);
+      ftime(val);
     }
   
     let date = new Date(fullDate);
@@ -28,6 +24,15 @@ const NewAvailableHours = ({ fullDate, ftime }) => {
     
     if(day === 5) { len = 7; }
     else if(day < 5) { len = 10; }
+
+    if(len === 0) {
+      ftime("0");
+      return (
+        <div>
+          <h2>no available hours</h2>
+        </div>
+      )
+    }
   
     date.setHours(0,0,0);
   
@@ -55,15 +60,15 @@ const NewAvailableHours = ({ fullDate, ftime }) => {
   
     return (
       <div>
+        <p></p>
+
         <h6>Curr Date: {currDate}</h6>
         <div className="hours hour-button">
-          {/* {hours.map((t, index) => {<Button key={index} text={calcTime(t)} />)} */}
           {hours.map((t, index) => {
               return <Button key={index} text={calcTime(t)} btn_f={handleChange} val={calcTime(t)}/>
             })
           }
         </div>
-        <p>Selected hour: {time}</p>
       </div>
     )
   

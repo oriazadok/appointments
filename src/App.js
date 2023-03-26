@@ -1,8 +1,5 @@
 import React, { useEffect, useState } from 'react'; 
 
-// import { auth, db } from "./config/firebase-config"
-// import { collection, getDocs, addDoc, deleteDoc, updateDoc, doc } from 'firebase/firestore';
-
 import './App.css';
 
 import Navbar from './components/Navbar';
@@ -17,67 +14,25 @@ import Contact from "./pages/Contact";
 import SignUp from './pages/SignUp';
 import SignIn from './pages/SignIn';
 import Profile from './pages/Profile'
-// import { async } from '@firebase/util';
+
+/**
+ * toDo:
+ * 1. connect to fire base
+ * 2. create the gallery
+ * 3. edit the prices page
+ * 4. figure out what to put in the home page
+ * 5. style contact etc
+ * 6. add seperation between admin and user
+ */
 
 function App() {
 
   const[authorized, setauthorized] = useState(false);
   const[userName, setUserName] = useState("");
-  const[dataMenu, setDataMenu] = useState([]);
+  const[dataMenu, setDataMenu] = useState({});
 
-  // const[clientList, setClientList] = useState([]);
-
-  // const clientsCollectionRef = collection(db, "clients");
-
-  // useEffect(() => {
-  //   const getClientList = async () => {
-  //     // READ THE DATA
-  //     // SET THE CLIENT LIST
-  //     try {
-  //       const data = await getDocs(clientsCollectionRef);
-  //       const filteredData = data.docs.map((doc) => ({
-  //         ...doc.data(),
-  //         id: doc.id,
-  //       }))
-  //       console.log(filteredData);
-  //     } catch(err) {
-  //       console.error(err);
-  //     }
-  //   };
-
-  //   getClientList();
-  // }, []);
-
-  // useEffect(() => {
-  //   const addClient = async () => {
-  //     try {
-  //       await addDoc(clientsCollectionRef, {
-  //         uid: auth?.currentUser.uid,
-  //         fname: "or",
-  //         lname: "re",
-  //         uname: "oro"
-  //       });
-  //     } catch(err) {
-  //       console.error(err);
-  //     }
-  //   }
-  //   addClient();
-  // }, [])
-
-  // const deleteClient = async (id) => {
-  //   const clientDoc = doc(db, "clients", id);
-  //   await deleteDoc(clientDoc);
-  // }
-
-  // const updateClient = async (id) => {
-  //   const clientDoc = doc(db, "clients", id);
-  //   await updateDoc(clientDoc, { uname: "newuname" });
-  // }
-
-  
 
   const setauthorization = (state, username) => {
-    // console.log("state", state);
     setauthorized(state);
     setUserName(username);
   }
@@ -90,7 +45,7 @@ function App() {
         setDataMenu(data);
       })
   }, []);
-  
+
   return (
     
     <div>

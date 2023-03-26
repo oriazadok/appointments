@@ -4,10 +4,9 @@ import Calendar from 'react-calendar';
 import Button from "../components/Button"
 import ScheduledAppointments from '../components/ScheduledAppointments';
 import HaircutMenu from '../components/HaircutMenu';
-// import AvailableHours from './AvailableHours';
 import NewAvailableHours from '../components/NewAvailableHours';
 
-import {  useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 // import { Redirect } from "react-router-dom"
 
 import '../styles/Button.css'
@@ -23,16 +22,16 @@ const Profile = ({ setauth, authorized, uname, dataMenu }) => {
   //   navigate("/");
   // }
 
-  const [showHaircutMenu, setShowHaircutMenu]=useState(false);
-  const [selected, setSelected]=useState("");
-  const [date, setDate]=useState(new Date());
-  const [hour, setHour] = useState("9:00");
+  const [showHaircutMenu, setShowHaircutMenu]=useState(false);                  // show haircut menu button
+  const [selected, setSelected]=useState("");                                   // selected hair style option
+  const [date, setDate]=useState(new Date());                                   // selected date option
+  const [hour, setHour] = useState("9:00");                                     // selected hour option
 
 
   const schedule = () => { setShowHaircutMenu(true); }
   const select = (s) => { setSelected(s); }
   const onChange = (chosen_date) => { setDate(chosen_date); }
-  const setTime = (h) => { setHour(h); console.log("cudate", date) }
+  const setTime = (h) => { setHour(h); }
 
   const logout = () => {
     setauth(false, "");
@@ -42,10 +41,10 @@ const Profile = ({ setauth, authorized, uname, dataMenu }) => {
   const send = async (event) => {
     const schedule = {
       style: selected,
-      date: date,
+      date: date.toISOString(),
       hour: hour, 
     }
-    console.log("zzzzzz", schedule)
+    console.log("zzz2", schedule)
     event.preventDefault();
     try {
         const response = await fetch('/api/schedule', {
@@ -54,19 +53,13 @@ const Profile = ({ setauth, authorized, uname, dataMenu }) => {
             headers: { 'Content-Type': 'application/json' },
         });
         const ans = await response.json();
-        console.log("anss", ans);
+        console.log("zzz3", ans);
+        // console.log("zzz4", new Date(Date.parse(ans.date)));
+        // console.log("zzz5", ans.hour);
 
     } catch (error) {
         console.error(error);
     }
-  };
-
-  const clear = {
-    clear: "left"
-  };
-  
-  const h2 = {
-    margin: "10px"
   };
 
   return (
@@ -76,10 +69,12 @@ const Profile = ({ setauth, authorized, uname, dataMenu }) => {
         btn_f = {logout} 
       />
 
-      <h1 style={clear}>Hello {uname}</h1>
-      <h2 style={h2}>my appoonitments</h2>
-      <ScheduledAppointments /> {/* table of scheduled appointments */}
+      <h1 style={{clear: "left"}}>Hello {uname}</h1>
+      <h2 style={{margin: "10px"}}>my appoonitments</h2>
+      {/* table of scheduled appointments */}
+      <ScheduledAppointments /> 
 
+      {/* showHaircutMenu button  */}
       {
         showHaircutMenu === false ?
           <Button class_name="schedule-btn"
@@ -100,33 +95,31 @@ const Profile = ({ setauth, authorized, uname, dataMenu }) => {
       {
         selected !== "" ? 
         // <Datepicker controls={['calendar']} touchUi={true} inputComponent="input" inputProps={props} />
-        //   <input type="date" onChange={e=>setDate(e.target.value)} />
-          <div className="cal-container"><Calendar onChange={onChange} value={date} d/></div>
+          <div className="cal-container"><Calendar onChange={onChange} value={date} /></div>
         : null
       }
       
       {
         selected !== "" ? 
-          <p>Selected Date: {date.toDateString()} </p>
+          <p> Date: {date.toDateString()} </p>
           : null
       }
 
       { /* avaliable hours */ }
-
       {
         selected !== "" ? 
           <NewAvailableHours fullDate={date} ftime={setTime}/>
           : null
       }
 
-      {/* {
-        selected !== "" ? 
-          <AvailableHours fullDate={date} time={setTime}/>
+      {
+        selected !== "" && hour !== "0" ? 
+          <p>Selected hour: {hour}</p>
           : null
-      } */}
+      }
 
       {
-        selected !== "" ? 
+        selected !== "" && hour !== "0" ? 
           <Button text="save" btn_f={send}/>
           : null
       }
