@@ -1,90 +1,19 @@
 import { useState } from 'react'
-// import { useNavigate } from 'react-router-dom';
 import "../styles/Form.css"
 
-import { auth, googleProvider } from "../config/firebase-config";
-import { signInWithPopup, signOut } from "firebase/auth";
-
-
-const Form = ({ setauth }) => {
-
-    // const navigate = useNavigate();
+const Form = ({ signUp }) => {
 
     const [formData, setFormData] = useState({});
 
-    // console.log(auth?.currentUser?.email);
-
-    const signUp = async () => {
-        
-        try {
-            const response = await fetch('/api/signUp', {
-                method: 'POST',
-                body: JSON.stringify(formData),
-                headers: { 'Content-Type': 'application/json' },
-            });
-            const ans = await response.json();
-            console.log("anss", ans);
-    
-        } catch (error) {
-            console.error(error);
-        }
-    };
-
-    const signInWithGoogle = async() => {
-        try {
-            await signInWithPopup(auth, googleProvider);
-        } catch(err) {
-            console.error(err);
-        }
-    };
-
-    const logout = async() => {
-        try {
-            await signOut(auth);
-        } catch (err) {
-            console.error(err);
-        }
+    const signup = () => {
+        signUp(formData);
     }
-
-    const show = () => {
-        setFormData({na: "ccwe"});
-        console.log(formData);
-    };
-
-
-
-    // const handleSubmit = async (event) => {
-    //     event.preventDefault();
-    //     try {
-    //         const response = await fetch('/api/submit', {
-    //             method: 'POST',
-    //             body: JSON.stringify(formData),
-    //             headers: { 'Content-Type': 'application/json' },
-    //         });
-    //         const ans = await response.json();
-    //         console.log(ans);
-
-    //         if(!ans){
-    //             window.alert("Registered succesfully!");
-    //             setauth(true, formData.uname);
-    //             navigate('/SignIn/');
-    //             // navigate('/');
-    //         } else {
-    //             window.alert("You already have an acount!");
-    //             navigate('/');
-    //         }
-            
-    //     } catch (error) {
-    //         console.error(error);
-    //     }
-    // };
 
     const handleChange = (event) => {
         setFormData({
             ...formData,
             [event.target.name]: event.target.value,
         });
-        console.log("fdfd", formData);
     };
     
     let days = [];
@@ -144,11 +73,8 @@ const Form = ({ setauth }) => {
                     </datalist><br/><br/>
 
                     {/* <input type="submit" value="Sign Up" /> */}
-                    <button onClick={signUp}>create</button>
+                    <button onClick={signup}>create</button>
                 </form>
-                <button onClick={show}>show</button>
-                <button onClick={signInWithGoogle}>sign in with google</button>
-                <button onClick={logout}>Log Out</button>
             </div>
         </div>
     )

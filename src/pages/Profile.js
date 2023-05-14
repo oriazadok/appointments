@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
 import Calendar from 'react-calendar';
+// import { auth } from "../config/firebase-config";
+// import { signOut } from "firebase/auth";
 
 import Button from "../components/Button"
 import ScheduledAppointments from '../components/ScheduledAppointments';
@@ -33,6 +35,14 @@ const Profile = ({ setauth, authorized, uname, dataMenu }) => {
   const onChange = (chosen_date) => { setDate(chosen_date); }
   const setTime = (h) => { setHour(h); }
 
+  // const logout = async() => {
+  //   try {
+  //       await signOut(auth);
+  //   } catch (err) {
+  //       console.error(err);
+  //   }
+  // }
+  
   const logout = () => {
     setauth(false, "");
     navigate("/");
