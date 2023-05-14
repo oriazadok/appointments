@@ -1,34 +1,24 @@
-import { useNavigate } from 'react-router-dom';
-import Button from '../components/Button'
+// import { useNavigate } from 'react-router-dom';
+// import Button from '../components/Button'
 import { useState } from 'react'
-// import LogIn from '../components/Header';
-// import Profile from "./Profile.js"
+
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from '../firebase'
 
 const SignIn = ({ setauth, authorized, uname, dataMenu }) => {
 
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const [formData, setFormData] = useState({});
-  const [err, setErr] = useState(false);
+  // const [err, setErr] = useState(false);
 
   const handleSubmit = async (event) => {
-    event.preventDefault();
     try {
-        const response = await fetch('/api/verify', {
-            method: 'POST',
-            body: JSON.stringify(formData),
-            headers: { 'Content-Type': 'application/json' },
-        });
-        const uname = await response.json();
-        console.log("uname", uname);
-
-        if(uname) {
-          setauth(true, uname);
-          navigate('/profile/');
-        } else {
-          setErr(true);
-        }
+      const userCredential = await signInWithEmailAndPassword(auth, formData.email, formData.password);
+      // Signed in 
+      const user = userCredential.user;
+      console.log("User signed in: ", user);
     } catch (error) {
-        console.error(error);
+      console.error(error);
     }
   };
 
@@ -37,16 +27,7 @@ const SignIn = ({ setauth, authorized, uname, dataMenu }) => {
         ...formData,
         [event.target.name]: event.target.value,
     });
-    // console.log("fdfd", formData);
   };
-
-  // const signIn = ( formdata ) => {
-  //   // navigate('SignIn/');
-  //   navigate('profile/');
-  // }
-  const signUp = () => {
-    navigate('/signup');
-  }
 
   return (
 
@@ -69,15 +50,7 @@ const SignIn = ({ setauth, authorized, uname, dataMenu }) => {
           </form>
         </div>
 
-        {err ? <p>please try again</p> : null}
-        
-        {/* <Button 
-          text={'sign In'}
-          btn_f = {signIn}/> */}
-
-        <Button 
-          text={'sign Up'}
-          btn_f = {signUp}/>
+        {/* {err ? <p>please try again</p> : null} */}
       </div>
 
     </header>
