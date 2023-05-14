@@ -14,10 +14,10 @@ const Form = ({ setauth }) => {
 
     // console.log(auth?.currentUser?.email);
 
-    const signIn = async () => {
+    const signUp = async () => {
         
         try {
-            const response = await fetch('/api/submit', {
+            const response = await fetch('/api/signUp', {
                 method: 'POST',
                 body: JSON.stringify(formData),
                 headers: { 'Content-Type': 'application/json' },
@@ -144,7 +144,7 @@ const Form = ({ setauth }) => {
                     </datalist><br/><br/>
 
                     {/* <input type="submit" value="Sign Up" /> */}
-                    <button onClick={signIn}>create</button>
+                    <button onClick={signUp}>create</button>
                 </form>
                 <button onClick={show}>show</button>
                 <button onClick={signInWithGoogle}>sign in with google</button>
