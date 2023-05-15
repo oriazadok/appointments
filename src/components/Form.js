@@ -5,7 +5,13 @@ const Form = ({ signUp }) => {
 
     const [formData, setFormData] = useState({});
 
-    const signup = () => {
+    // const signup = (event) => {
+    //     event.preventDefault();
+    //     signUp(formData);
+    // }
+
+    const handleSubmit = (event) => {
+        event.preventDefault();
         signUp(formData);
     }
 
@@ -32,7 +38,7 @@ const Form = ({ signUp }) => {
             <h1 className="head">Sign Up</h1>
             <div className="form">
                 {/* <form action="" method="get"> */}
-                <form>
+                <form onSubmit={handleSubmit}>
                     <label>First name:</label><br/>
                     <input type="text" id="fname" name="fname" required onChange={handleChange}/><br/>
 
@@ -72,8 +78,8 @@ const Form = ({ signUp }) => {
                         {years.map((op, index) => <option key={index}>{op}</option>)} 
                     </datalist><br/><br/>
 
-                    {/* <input type="submit" value="Sign Up" /> */}
-                    <button onClick={signup}>create</button>
+                    <input type="submit" value="Sign Up" />
+                    {/* <button onClick={signup}>create</button> */}
                 </form>
             </div>
         </div>

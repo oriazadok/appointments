@@ -28,13 +28,15 @@ import Profile from './pages/Profile'
 function App() {
 
   const[authorized, setauthorized] = useState(false);
-  const[userName, setUserName] = useState("");
   const[dataMenu, setDataMenu] = useState({});
+  
+  const[userCredential, setUserCredential] = useState({});
 
 
-  const setauthorization = (state, username) => {
+  const setauthorization = (state, uc) => {
     setauthorized(state);
-    setUserName(username);
+    setUserCredential(uc);
+
   }
 
   useEffect(() => {
@@ -59,9 +61,9 @@ function App() {
           <Route path="/gallery" element={<Gallery/>} />
           <Route path="/prices" element={<Prices/>} />
           <Route path="/contact" element={<Contact/>} />
-          <Route path="/signin" element={<SignIn setauth={setauthorization} authorized={authorized} uname={userName} dataMenu={dataMenu} />} />
+          <Route path="/signin" element={<SignIn setauth={setauthorization} />} />
           <Route path="/signup" element={<SignUp setauth={setauthorization}/>} />
-          <Route path="/profile" element={<Profile setauth={setauthorization} authorized={authorized} uname={userName} dataMenu={dataMenu} />} />
+          <Route path="/profile" element={<Profile authorized={authorized} setauth={setauthorization} userCredential={userCredential} dataMenu={dataMenu} />} />
 
           <Route path="*" element={<div><h1>404 Not Found</h1></div>} />
         </Routes>

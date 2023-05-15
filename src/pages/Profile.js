@@ -1,28 +1,30 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
+import { useNavigate } from 'react-router-dom';
 import Calendar from 'react-calendar';
-// import { auth } from "../config/firebase-config";
-// import { signOut } from "firebase/auth";
+
+import { auth } from "../config/firebase-config";
+import { signOut } from "firebase/auth";
 
 import Button from "../components/Button"
 import ScheduledAppointments from '../components/ScheduledAppointments';
 import HaircutMenu from '../components/HaircutMenu';
 import NewAvailableHours from '../components/NewAvailableHours';
 
-import { useNavigate } from 'react-router-dom';
-// import { Redirect } from "react-router-dom"
 
 import '../styles/Button.css'
 import '../styles/Profile.css'
 import 'react-calendar/dist/Calendar.css'
 import '../styles/Cal.css'
 
-const Profile = ({ setauth, authorized, uname, dataMenu }) => {
+const Profile = ({ authorized, setauth, userCredential, uname, dataMenu }) => {
 
   const navigate = useNavigate();
 
-  // if( !authorized ) {
-  //   navigate("/");
-  // }
+  console.log(userCredential);
+
+  if( !authorized ) {
+    navigate("/");
+  }
 
   const [showHaircutMenu, setShowHaircutMenu]=useState(false);                  // show haircut menu button
   const [selected, setSelected]=useState("");                                   // selected hair style option
@@ -35,17 +37,14 @@ const Profile = ({ setauth, authorized, uname, dataMenu }) => {
   const onChange = (chosen_date) => { setDate(chosen_date); }
   const setTime = (h) => { setHour(h); }
 
-  // const logout = async() => {
-  //   try {
-  //       await signOut(auth);
-  //   } catch (err) {
-  //       console.error(err);
-  //   }
-  // }
-  
-  const logout = () => {
-    setauth(false, "");
-    navigate("/");
+  const logout = async() => {
+    try {
+        await signOut(auth);
+        setauth(false, null);
+        navigate("/");
+    } catch (err) {
+        console.error(err);
+    }
   }
 
   const send = async (event) => {

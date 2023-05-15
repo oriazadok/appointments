@@ -1,25 +1,27 @@
-// import { useNavigate } from 'react-router-dom';
-// import Button from '../components/Button'
+import { useNavigate } from 'react-router-dom';
 import { useState } from 'react'
+// import Button from '../components/Button'
 
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from '../firebase'
 
-const SignIn = ({ setauth, authorized, uname, dataMenu }) => {
+const SignIn = ({ setauth }) => {
 
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
+
   const [formData, setFormData] = useState({});
   // const [err, setErr] = useState(false);
 
   const handleSubmit = async (event) => {
+    event.preventDefault();
     try {
       const userCredential = await signInWithEmailAndPassword(auth, formData.email, formData.password);
-      // Signed in 
-      const user = userCredential.user;
-      console.log("User signed in: ", user);
+      navigate("/profile");
+      setauth(true, userCredential);
     } catch (error) {
       console.error(error);
     }
+    
   };
 
   const handleChange = (event) => {
