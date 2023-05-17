@@ -9,25 +9,30 @@ const SignUp = ({ setauth }) => {
     const navigate = useNavigate();
 
     const signUpAndSignIn = async (formData) => {
-        
+
         try {
             const response = await fetch('/api/signUp', {
                 method: 'POST',
                 body: JSON.stringify(formData),
                 headers: { 'Content-Type': 'application/json' },
             });
-            const userRecord = await response.json();
-            console.log(userRecord);
+            await response.json();
+            // console.log("user record", userRecord);
 
-            const userCredential = await signInWithEmailAndPassword(auth, formData.email, formData.password);
-            // Signed in 
-            const user = userCredential.user;
-            console.log("User signed in: ", user);
+            if (response.ok) {
+                const userCredential = await signInWithEmailAndPassword(auth, formData.email, formData.password);
+
+                setauth(true, userCredential);
+                navigate("/profile");
+            } else {
+                // Handle error response
+                console.error('Sign-up request failed:', response.status);
+            }
             
         } catch (error) {
             console.error(error);
         }
-        navigate("/profile");
+        
     };
     
     return (

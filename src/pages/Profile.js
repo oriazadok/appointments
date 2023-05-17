@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom';
 import Calendar from 'react-calendar';
 
@@ -16,16 +16,16 @@ import '../styles/Profile.css'
 import 'react-calendar/dist/Calendar.css'
 import '../styles/Cal.css'
 
-const Profile = ({ authorized, setauth, userCredential, uname, dataMenu }) => {
+const Profile = ({ authorized, setauth, userCredential, dataMenu }) => {
 
   const navigate = useNavigate();
-
-  console.log(userCredential);
 
   if( !authorized ) {
     navigate("/");
   }
 
+  const [uname, setUname]=useState(false);                  // show haircut menu button
+  const [appointmentslist, setAppointmentslist]=useState([]);                  // show haircut menu button
   const [showHaircutMenu, setShowHaircutMenu]=useState(false);                  // show haircut menu button
   const [selected, setSelected]=useState("");                                   // selected hair style option
   const [date, setDate]=useState(new Date());                                   // selected date option
@@ -36,6 +36,39 @@ const Profile = ({ authorized, setauth, userCredential, uname, dataMenu }) => {
   const select = (s) => { setSelected(s); }
   const onChange = (chosen_date) => { setDate(chosen_date); }
   const setTime = (h) => { setHour(h); }
+
+  useEffect((event) => {
+  const fetchData = async () => {
+    try {
+      // Fetch data from the database
+      const uid = userCredential.user.uid;
+      const response = await fetch(`/api/unameAndAppointmentsList?uid=${uid}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+      const data = await response.json();
+
+      console.log("datatat: ", data.appointments);
+      
+      // Update the state with the fetched data
+      setUname(data.uname);
+      setAppointmentslist(data.appointments.appointments);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  }
+
+  fetchData();
+}, [appointmentslist]);
+
+    
+    
+  //   // Call the fetchData function
+  //   fetchData();
+  // }, [userCredential.user.uid, appointmentslist]); // Include appointmentslist in the dependency array
+  
 
   const logout = async() => {
     try {
@@ -48,26 +81,30 @@ const Profile = ({ authorized, setauth, userCredential, uname, dataMenu }) => {
   }
 
   const send = async (event) => {
-    const schedule = {
+    const dataToSchedule = {
       style: selected,
       date: date.toISOString(),
       hour: hour, 
     }
-    console.log("zzz2", schedule)
-    event.preventDefault();
+    const uid = userCredential.user.uid;
     try {
-        const response = await fetch('/api/schedule', {
-            method: 'POST',
-            body: JSON.stringify(schedule),
-            headers: { 'Content-Type': 'application/json' },
-        });
-        const ans = await response.json();
-        console.log("zzz3", ans);
-        // console.log("zzz4", new Date(Date.parse(ans.date)));
-        // console.log("zzz5", ans.hour);
+      const response = await fetch('/api/schedule', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({uid, dataToSchedule})
+      });
 
+      const res = await response.json();
+
+      if (response.ok) {
+        console.log('Field updated successfully', res);
+        setAppointmentslist(res.appointments);
+        // Handle any further actions if needed
+      }
     } catch (error) {
-        console.error(error);
+      console.error('Error updating field:', error);
     }
   };
 
@@ -81,7 +118,7 @@ const Profile = ({ authorized, setauth, userCredential, uname, dataMenu }) => {
       <h1 style={{clear: "left"}}>Hello {uname}</h1>
       <h2 style={{margin: "10px"}}>my appoonitments</h2>
       {/* table of scheduled appointments */}
-      <ScheduledAppointments /> 
+      <ScheduledAppointments appointmentslist={appointmentslist}/> 
 
       {/* showHaircutMenu button  */}
       {
@@ -142,9 +179,6 @@ const Profile = ({ authorized, setauth, userCredential, uname, dataMenu }) => {
       <br />
       <br />
     </div>
-    
-
-    
   )
 }
 

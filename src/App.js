@@ -17,7 +17,7 @@ import Profile from './pages/Profile'
 
 /**
  * toDo:
- * 1. connect to fire base
+ * 1. move signIn and signOut to the server
  * 2. create the gallery
  * 3. edit the prices page
  * 4. figure out what to put in the home page
@@ -27,23 +27,20 @@ import Profile from './pages/Profile'
 
 function App() {
 
-  const[authorized, setauthorized] = useState(false);
-  const[dataMenu, setDataMenu] = useState({});
-  
+  const[authorized, setAuthorized] = useState(false);
   const[userCredential, setUserCredential] = useState({});
 
+  const[dataMenu, setDataMenu] = useState({});
 
   const setauthorization = (state, uc) => {
-    setauthorized(state);
+    setAuthorized(state);
     setUserCredential(uc);
-
   }
 
   useEffect(() => {
     fetch("/api/HairStyleMenu")
       .then(res => res.json())
       .then(data => {
-        console.log("list data from server" , data);
         setDataMenu(data);
       })
   }, []);

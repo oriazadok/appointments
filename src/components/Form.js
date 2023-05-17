@@ -5,11 +5,6 @@ const Form = ({ signUp }) => {
 
     const [formData, setFormData] = useState({});
 
-    // const signup = (event) => {
-    //     event.preventDefault();
-    //     signUp(formData);
-    // }
-
     const handleSubmit = (event) => {
         event.preventDefault();
         signUp(formData);
@@ -37,7 +32,6 @@ const Form = ({ signUp }) => {
         <div>
             <h1 className="head">Sign Up</h1>
             <div className="form">
-                {/* <form action="" method="get"> */}
                 <form onSubmit={handleSubmit}>
                     <label>First name:</label><br/>
                     <input type="text" id="fname" name="fname" required onChange={handleChange}/><br/>
@@ -58,7 +52,6 @@ const Form = ({ signUp }) => {
                     <input type="radio" id="female" name="gender" required value="FEMALE" onChange={handleChange}/>
                     <label> female</label><br/><br/>
 
-                    {/* type="number" */}
                     <label> Day: </label>
                     <input name="day" list="days" size="12" required onChange={handleChange}/>
                     <datalist id="days">
@@ -79,7 +72,6 @@ const Form = ({ signUp }) => {
                     </datalist><br/><br/>
 
                     <input type="submit" value="Sign Up" />
-                    {/* <button onClick={signup}>create</button> */}
                 </form>
             </div>
         </div>
